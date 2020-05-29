@@ -1,20 +1,25 @@
 {
   "name": "mernbh8m",
   "version": "1.0.0",
-  "description": "",
+  "description": "Brain hive Mern",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
   },
   "author": "Nicole Luguesi",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^4.0.1",
-    "concurrently": "^5.2.0",
+    "bcryptjs": "^2.4.3",
     "config": "^3.3.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.16"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "concurrently": "^5.2.0"
   }
 }
