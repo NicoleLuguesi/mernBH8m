@@ -8,6 +8,10 @@ const { mongoUri } = require('./config')
 app.use(cors());
 app.use(express.json());
 
+const users = require('./routes/api/users');
+
+app.use("./api/users", users)
+
 mongoose
 .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true  } )
 .then(() => console.log("Connected to db"))
@@ -17,6 +21,17 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Server has started on port ${port}`));
 
+//testing gitignore for future pushes
 
 // cors accepts request from any system - security of site
 
+// mongoose naming conventions
+// Model User
+// collection users
+//model files -> User.js
+// routes -> users.js
+
+// validate the body
+// must have email and password
+// make sure it's a valid email
+// min password 6 character
