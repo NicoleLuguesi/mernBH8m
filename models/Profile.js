@@ -5,38 +5,32 @@ const ProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'user'
   },
-  author: {
+  fName: {
     type: String
   },
-  skillLevel: {
-    type: [String]
+  lName: {
+    type: String
   },
-  cohort: {
+  Name: {
     type: Number
   },
-  title: {
+  City: {
     type: String
   },
-  categories: {
+  State: {
     type: String
   },
-  resourceLink: {
+  Avatar: {
     type: String
   },
-  resourceType: {
+  githubUrl: {
     type: String
   },
-  date: {
-    type: Date.now
+  twitterUrl: {
+    type: String
   },
-  lengthOfVideo: {
-    type: Number
-  },
-  timeToComplete: {
-    type: Number
-  },
-  rating: {
-    type: Number
+  bio: {
+    type: String
   }
 });
 
