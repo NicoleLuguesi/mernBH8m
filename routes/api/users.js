@@ -7,6 +7,13 @@ const isEmpty = require("../../utils/isEmpty");
 
 const User = require("../../models/User");
 
+// @route   GET api/users
+// @desc    Test route
+// @access  Public
+router.get('/', (req, res) => res.send('User route'));
+
+
+
 // @route		POST api/users
 // @desc		create new user
 // @access	public

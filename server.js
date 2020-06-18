@@ -10,7 +10,7 @@ app.use(express.json());
 
 const users = require('./routes/api/users');
 
-app.use("./api/users", users)
+app.use("/api/users", users)
 
 mongoose
 .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true  } )
