@@ -1,6 +1,8 @@
 const express = require("express");
 const Profile = require("../../models/Profile");
 const router = express.Router();
+const { check, validationResult } = require("express-validator");
+
 
 const User = require('../../models/User');
 
@@ -16,9 +18,8 @@ router.get('/', (req, res) => res.send('Profile route'));
 router.post('/', [
   // check('ref', 'users is required').not().isEmpty(),
   check('firstName', 'First name is required').not().isEmpty(),
-  check('lastName', 'Last name is required').not().isEmpty(),
-  check('name', 'Name is required').not().isEmpty()
-],
+  check('lastName', 'Last name is required').not().isEmpty()
+ ],
 
 async  (req, res) => {
 //   const errors = validationResult(req);
@@ -48,7 +49,7 @@ if(githubUrl) profileFields.social.githubUrl = githubUrl;
 if(twitterUrl) profileFields.twitterUrl = twitterUrl;
 
 try {
-  let profile = await Profile.findOne({ user: req.user.id });
+  let profile = await Profile.findById({ user: req.user.id });
 
   if(profile) {
     // Update
