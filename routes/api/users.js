@@ -2,17 +2,11 @@ const express = require("express");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const isEmpty = require("../../utils/isEmpty");
+const config = require("../../config");
 
 const User = require("../../models/User");
-
-// @route   GET api/users
-// @desc    Test route
-// @access  Public
-router.get('/', (req, res) => res.send('User route'));
-
-
 
 // @route		POST api/users
 // @desc		create new user
@@ -36,7 +30,12 @@ router.post(
         email: req.body.email,
         password: req.body.password,
       };
-      // Encrypt password
+
+      const existingUser = await User.findOne({ email: userData.email });
+      if (!isEmpty(existingUser)) {
+        return res.status(400).json({ errors: { email: "Email in use" } });
+      }
+
       const salt = await bcrypt.genSalt(10);
       userData.password = await bcrypt.hash(userData.password, salt);
 
@@ -72,35 +71,27 @@ router.put(
       const user = await User.findOne({ email: req.body.email });
 
       if (isEmpty(user)) {
-        return res.status(404).json({ errors: { message: "user not found" } });
+        return res.status(400).json({ errors: { message: "Invalid Login" } });
       }
 
       const isMatch = await bcrypt.compare(req.body.password, user.password);
 
       if (!isMatch) {
-        return res
-          .status(403)
-          .json({ errors: { message: "invalid password" } });
+        return res.status(400).json({ errors: { message: "Invalid Login" } });
       }
 
-      // Return jsonwebtoken
-
-      const payload = {
-        user: {
-          id: user.id
-        }
-      };
-
-      jwt.sign(
-        payload,
-        config.get('jwtSecret'),
-        { expiresIn: 360000 },
-        (err, token) => {
-          res.json({ token })
-        }
-      );
+      // information >> jwt encode + key >> token >> decode + key >> information
+      User.findByIdAndUpdate(user._id, { lastLogin: Date.now() });
 
       //create the jwt token and return it to user. email and the id
+      const payload = {
+        id: user._id,
+        email: user.email,
+      };
+
+      const token = jwt.sign(payload, config.secretOrKey, {});
+
+      res.json(token);
     } catch (error) {
       console.error(error);
       return res.status(500).json(error);
