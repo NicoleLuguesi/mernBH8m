@@ -12,6 +12,7 @@ const users = require('./routes/api/users');
 
 app.use("/api/users", users)
 
+
 //Define Routes
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
