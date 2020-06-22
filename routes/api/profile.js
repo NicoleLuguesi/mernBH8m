@@ -2,6 +2,7 @@ const express = require("express");
 const Profile = require("../../models/Profile");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+const isEmpty = require("../../utils/isEmpty");
 
 
 const User = require('../../models/User');
