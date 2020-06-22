@@ -1,37 +1,38 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const profileSchema = new Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'users',
+      required: true,
+      unique: true
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    bio: {
+      type: String
+    },
+    city: String,
+    state: String,
+    avatar: String,
+    githubUrl: String,
+    twitterUrl: String,
+  },
+  //timestamps(updated at and created at) will track changes to data
+  //mongoose will handle the timestamps
+  { timestamps: {} }
+);
+module.exports = Profile = mongoose.model('profiles', profileSchema);
 
-const ProfileSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'user'
-  },
-  fName: {
-    type: String
-  },
-  lName: {
-    type: String
-  },
-  Name: {
-    type: Number
-  },
-  City: {
-    type: String
-  },
-  State: {
-    type: String
-  },
-  Avatar: {
-    type: String
-  },
-  githubUrl: {
-    type: String
-  },
-  twitterUrl: {
-    type: String
-  },
-  bio: {
-    type: String
-  }
-});
-
-module.exports = Profile = moongoose.model('profile', ProfileSchema)
+// create register route for Profile Model , validation without authentication- userID will be sent via the body, we will go thru auth on Monday
