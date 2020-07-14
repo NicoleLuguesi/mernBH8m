@@ -32,8 +32,8 @@ router.post(
     }
     try {
       const {
-        fName,
-        lName,
+        firstName,
+        lastName,
         name,
         city,
         state,
@@ -45,8 +45,8 @@ router.post(
 
       // Build profile object
       const profileFields = {
-        fName,
-        lName,
+        firstName,
+        lastName,
         name,
       };
       profileFields.user = userId;
