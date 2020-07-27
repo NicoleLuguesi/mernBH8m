@@ -1,3 +1,5 @@
+// Register users - adding users
+
 const express = require("express");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
@@ -8,9 +10,15 @@ const config = require("../../config");
 
 const User = require("../../models/User");
 
+// @route  GET api/posts
+// @desc   Test route
+// @access Public
+
+router.get('/', (req, res) => res.send('POSTS ROUTE TEST'));
+
 // @route		POST api/users
 // @desc		create new user
-// @access	public
+// @access	Public
 router.post(
   "/",
   [
@@ -27,7 +35,7 @@ router.post(
     }
     try {
       const userData = {
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
         password: req.body.password,
       };
 

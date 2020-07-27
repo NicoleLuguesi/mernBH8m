@@ -1,3 +1,5 @@
+// Handle getting JSON Web token
+
 const express = require("express");
 const router = express.Router();
 

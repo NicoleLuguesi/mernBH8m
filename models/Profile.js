@@ -1,12 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 const profileSchema = new Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'users',
+      ref: "users",
       required: true,
-      unique: true
+      unique: true,
     },
     firstName: {
       type: String,
@@ -20,19 +21,18 @@ const profileSchema = new Schema(
       type: String,
       required: true,
     },
-    bio: {
-      type: String
-    },
+    bio: String,
     city: String,
     state: String,
     avatar: String,
-    githubUrl: String,
-    twitterUrl: String,
+    social: {
+      githubUrl: String,
+      twitterUrl: String,
+    },
   },
   //timestamps(updated at and created at) will track changes to data
   //mongoose will handle the timestamps
   { timestamps: {} }
 );
-module.exports = Profile = mongoose.model('profiles', profileSchema);
 
-// create register route for Profile Model , validation without authentication- userID will be sent via the body, we will go thru auth on Monday
+module.exports = Profile = mongoose.model("profiles", profileSchema);
