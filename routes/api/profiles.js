@@ -1,3 +1,5 @@
+// Having to do with Profiles, adding, updating
+
 const express = require("express");
 const router = express.Router();
 const Profile = require("../../models/Profile");
@@ -34,7 +36,6 @@ router.post(
       const {
         firstName,
         lastName,
-        name,
         city,
         state,
         githubUrl,
@@ -45,10 +46,12 @@ router.post(
 
       // Build profile object
       const profileFields = {
-        firstName,
-        lastName,
-        name,
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        // name: `${firstName.trim()} ${lastName.trim()}`,
+        // initials: `${firstName[0]}${lastName[0]}`
       };
+      profileFields.name = `${profileFields.firstName} ${profileFields.lastName}`;
       profileFields.user = userId;
       if (bio) profileFields.bio = bio;
       if (city) profileFields.city = city;
@@ -85,39 +88,6 @@ router.post(
     }
   }
 );
-
-// @route  GET api/profile
-// @desc    GET all profiles
-// @access Public
-router.get('/', async (req, res) => {
-  try {
-    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
-    res.json(profiles)
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Server Error')
-  }
-});
-
-// @route  GET api/profile/me
-// @desc   Get current users profile
-// @access Private
-
-router.get('/me', auth, async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar']);
-
-    if(!profile) {
-      return res.status(400).json({ msg: 'There is no profile for this user'})
-    }
-
-    res.json(profile);
-
-  }catch(err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
 
 // @route		GET api/
 // @desc		Get logged in users profile
